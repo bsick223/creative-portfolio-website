@@ -21,7 +21,7 @@ export default function Shapes() {
             scale={40}
             blur={1}
             far={9} />
-            <Environment preset="studio" />
+            <Environment preset="sunset" />
         </Suspense>
 
             </Canvas>
@@ -60,20 +60,20 @@ function Geometries() {
 
     // shapes and colors
     const materials = [
-        new THREE.MeshNormalMaterial(),
-        new THREE.MeshStandardMaterial({color: 0x6c5ce7, roughness: 0}),
-        new THREE.MeshStandardMaterial({color: 0x00b894, roughness: 0.4}),
-        new THREE.MeshStandardMaterial({color: 0xe17055, roughness: 0.1}),
-        new THREE.MeshStandardMaterial({color: 0xffeaa7, roughness: 0.1}),
-        new THREE.MeshStandardMaterial({color: 0x636e72, roughness: 0.1}),
+        // new THREE.MeshNormalMaterial(),
+        new THREE.MeshStandardMaterial({color: 0x6c5ce7, metalness: 1, roughness: 0}),
+        // green => new THREE.MeshStandardMaterial({color: 0x00b894, metalness: 1, roughness: 0.4}),
+        new THREE.MeshStandardMaterial({color: 0xe17055, metalness: 1, roughness: 0.1}),
+        new THREE.MeshStandardMaterial({color: 0xffeaa7, metalness: 1, roughness: 0.1}),
+        new THREE.MeshStandardMaterial({color: 0x636e72, metalness: 1, roughness: 0.1}),
         new THREE.MeshStandardMaterial({
             roughness: 0.1,
-            metalness: 0.9,
+            metalness: 1,
             color: 0xb2bec3, 
         }),
         new THREE.MeshStandardMaterial({
             roughness: 0.1,
-            metalness: 0.9,
+            metalness: 1,
             color: 0xffeaa7, 
         }),
     ];
