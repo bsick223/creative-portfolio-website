@@ -10,4 +10,5 @@ export const components = {
   image_block: dynamic(() => import("./ImageBlock")),
   tech_list: dynamic(() => import("./TechList")),
   text_block: dynamic(() => import("./TextBlock")),
+  youtube_video: dynamic(() => import("./YoutubeVideo")),
 };

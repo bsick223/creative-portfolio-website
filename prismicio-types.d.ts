@@ -232,7 +232,10 @@ interface PageDocumentData {
 export type PageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
 
-type ProjectDocumentDataSlicesSlice = ImageBlockSlice | TextBlockSlice;
+type ProjectDocumentDataSlicesSlice =
+  | YoutubeVideoSlice
+  | ImageBlockSlice
+  | TextBlockSlice;
 
 /**
  * Content for Project documents
@@ -869,55 +872,43 @@ export type ImageBlockSlice = prismic.SharedSlice<
 >;
 
 /**
- * Item in *TechList → Default → Primary → Tech List*
+ * Primary content in *TechList → Default → Primary*
  */
-export interface TechListSliceDefaultPrimaryTechListItem {
+export interface TechListSliceDefaultPrimary {
   /**
-   * Tech Name field in *TechList → Default → Primary → Tech List*
+   * Title field in *TechList → Default → Primary*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: tech_list.default.primary.tech_list[].tech_name
+   * - **API ID Path**: tech_list.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  title: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *TechList → Items*
+ */
+export interface TechListSliceDefaultItem {
+  /**
+   * Tech Name field in *TechList → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tech_list.items[].tech_name
    * - **Documentation**: https://prismic.io/docs/field#key-text
    */
   tech_name: prismic.KeyTextField;
 
   /**
-   * Tech Color field in *TechList → Default → Primary → Tech List*
+   * Tech Color field in *TechList → Items*
    *
    * - **Field Type**: Color
    * - **Placeholder**: *None*
-   * - **API ID Path**: tech_list.default.primary.tech_list[].tech_color
+   * - **API ID Path**: tech_list.items[].tech_color
    * - **Documentation**: https://prismic.io/docs/field#color
    */
   tech_color: prismic.ColorField;
-}
-
-/**
- * Primary content in *TechList → Default → Primary*
- */
-export interface TechListSliceDefaultPrimary {
-  /**
-   * Heading field in *TechList → Default → Primary*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: tech_list.default.primary.heading
-   * - **Documentation**: https://prismic.io/docs/field#key-text
-   */
-  heading: prismic.KeyTextField;
-
-  /**
-   * Tech List field in *TechList → Default → Primary*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: tech_list.default.primary.tech_list[]
-   * - **Documentation**: https://prismic.io/docs/field#group
-   */
-  tech_list: prismic.GroupField<
-    Simplify<TechListSliceDefaultPrimaryTechListItem>
-  >;
 }
 
 /**
@@ -930,7 +921,7 @@ export interface TechListSliceDefaultPrimary {
 export type TechListSliceDefault = prismic.SharedSliceVariation<
   "default",
   Simplify<TechListSliceDefaultPrimary>,
-  never
+  Simplify<TechListSliceDefaultItem>
 >;
 
 /**
@@ -995,6 +986,51 @@ export type TextBlockSlice = prismic.SharedSlice<
   TextBlockSliceVariation
 >;
 
+/**
+ * Primary content in *YoutubeVideo → Default → Primary*
+ */
+export interface YoutubeVideoSliceDefaultPrimary {
+  /**
+   * Youtube Link field in *YoutubeVideo → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: youtube_video.default.primary.youtube_link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  youtube_link: prismic.LinkField;
+}
+
+/**
+ * Default variation for YoutubeVideo Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type YoutubeVideoSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<YoutubeVideoSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *YoutubeVideo*
+ */
+type YoutubeVideoSliceVariation = YoutubeVideoSliceDefault;
+
+/**
+ * YoutubeVideo Shared Slice
+ *
+ * - **API ID**: `youtube_video`
+ * - **Description**: YoutubeVideo
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type YoutubeVideoSlice = prismic.SharedSlice<
+  "youtube_video",
+  YoutubeVideoSliceVariation
+>;
+
 declare module "@prismicio/client" {
   interface CreateClient {
     (
@@ -1054,14 +1090,18 @@ declare module "@prismicio/client" {
       ImageBlockSliceVariation,
       ImageBlockSliceDefault,
       TechListSlice,
-      TechListSliceDefaultPrimaryTechListItem,
       TechListSliceDefaultPrimary,
+      TechListSliceDefaultItem,
       TechListSliceVariation,
       TechListSliceDefault,
       TextBlockSlice,
       TextBlockSliceDefaultPrimary,
       TextBlockSliceVariation,
       TextBlockSliceDefault,
+      YoutubeVideoSlice,
+      YoutubeVideoSliceDefaultPrimary,
+      YoutubeVideoSliceVariation,
+      YoutubeVideoSliceDefault,
     };
   }
 }
